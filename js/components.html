@@ -19,7 +19,7 @@
         <div><counter :step="4"></counter></div>
         <div><counter :start="5"></counter></div>
         <div><counter></counter></div>
-        <radios :slides="images" autoplay :interval="500"></radios>
+        <radios :slides="images" autoplay :interval="500" style="font-size:100px"></radios>
       </div>
       `,
       data() {
@@ -93,7 +93,7 @@
         },
       },
       template: `
-        <div class="border w-[600px] h-[200px] relative">
+        <div style="color:red" class="border w-[600px] h-[200px] relative">
           <button @click="prev" class="absolute top-1/2 -translate-y-1/2 left-2 bg-white/80">prev</button>
           <a :href="slides[i].imagelink" class="block w-full h-full">
             <img :src="slides[i].imageURL" alt="" class="block w-full h-full">
