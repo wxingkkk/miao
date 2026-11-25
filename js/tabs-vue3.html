@@ -11,7 +11,8 @@
       list-style: none;
       padding: 0;
     }
-    .active button{
+
+    .active button {
       background-color: aqua;
     }
   </style>
@@ -24,14 +25,7 @@
     let app = createApp({
       template: /*html*/`
       <div>
-        <ul class="tab-list">
-          <li v-for="(item, index) in items" :key="item.key" :class="{active : activeKey === item.key}">
-            <button @click="change(item.key)">{{ item.label }}</button>
-          </li>
-        </ul>
-        <div>
-          {{ currentContent }}
-        </div>
+        <tabs activeKey="2" :items="items"></tabs>
       </div>
       `,
       data() {
@@ -53,24 +47,59 @@
               children: 'Content of Tab Pane 3',
             },
           ],
-          activeKey: '1',
+        }
+      },
+      methods: {
+
+      },
+      computed: {
+
+      }
+    })
+    app.component('tabs', {
+      props: {
+        items: {
+          type: Array,
+          required: true,
+        },
+        activeKey: {
+          type: String,
+          default: "1",
+        },
+      },
+      template: /*html*/`
+        <ul class="tab-list">
+          <li v-for="(item, index) in items" :key="item.key" :class="{active : currentKey === item.key}">
+            <button @click="change(item.key)">{{ item.label }}</button>
+          </li>
+        </ul>
+        <div>
+          {{ currentContent }}
+        </div>     
+      `,
+      data() {
+        return {
+          currentKey: this.activeKey
         }
       },
       methods: {
         change(key) {
-          if (key !== this.activeKey) {
-            this.activeKey = key
+          if (key !== this.currentKey) {
+            this.currentKey = key
           }
         }
       },
       computed: {
         currentContent() {
-          const target = this.items.find((item, i) => {
-            return this.activeKey === item.key
+          let target = this.items.find((item, i) => {
+            return this.currentKey === item.key
           });
           return target ? target.children : ''
         }
-      }
+      },
+
+
+
     })
     app.mount('#app')
   </script>
